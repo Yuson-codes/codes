@@ -1,49 +1,58 @@
 let expression = "";
 let displayValue = "";
+const MaxDigit = 18;
 
 function showNumber(num) {
-    expression += num;
-    displayValue += num;
-    updateDisplay();
+    if (expression.length < MaxDigit) {
+        expression += num;
+        displayValue += num;
+        updateDisplay();
+    }
 }
 
 function showSymbol(symbol) {
-    if (symbol === '%') {
-        expression += "/100";
-        displayValue += '%'
-    } 
-    else if (symbol === '(') {
-        let lastChar = expression.slice(-1);
-        if (/\d|\)/.test(lastChar)) {
-            expression += '*(';
-            displayValue += '(';
+    if (expression.length < MaxDigit) {
+        if (symbol === '%') {
+            expression += "/100";
+            displayValue += '%'
+        } 
+        else if (symbol === '(') {
+            let lastChar = expression.slice(-1);
+            if (/\d|\)/.test(lastChar)) {
+                expression += '*(';
+                displayValue += '(';
+            }
+            else {
+                expression += '(';
+             displayValue += '(';
+            }
         }
         else {
-            expression += '(';
-            displayValue += '(';
+            expression += symbol;
+            displayValue += symbol;
         }
-    }
-    else {
-        expression += symbol;
-        displayValue += symbol;
-    }
-    updateDisplay();
+        updateDisplay();
+    } 
+    
 }
 
 function showSign(oparator) {
-    if (oparator === 'x') {
-        expression += '*';
-        displayValue +='x';
+    if (expression.length < MaxDigit) {
+        if (oparator === 'x') {
+            expression += '*';
+            displayValue +='x';
+        }
+        else if (oparator === '÷') {
+            expression += '/';
+            displayValue += '÷';
+        }
+        else {
+            expression += oparator;
+         displayValue += oparator;
+        }
+        updateDisplay();
     }
-    else if (oparator === '÷') {
-        expression += '/';
-        displayValue += '÷';
-    }
-    else {
-        expression += oparator;
-        displayValue += oparator;
-    }
-    updateDisplay();
+    
 }
 
 function showTotal() {
